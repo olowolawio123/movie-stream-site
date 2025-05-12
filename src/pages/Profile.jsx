@@ -8,8 +8,9 @@ import WatchingSection from '../components/WatchingSection';
 
 const Profile = () => {
   return (
-    <Container className="mt-4 text-white">
-      <Header />
+    <>
+    <Header />
+    <Container className="mt-4 vh-100 text-white">
       <Tabs defaultActiveKey="about" className="mt-4" fill>
         <Tab eventKey="about" title="About">
           <AboutSection />
@@ -22,6 +23,7 @@ const Profile = () => {
         </Tab>
       </Tabs>
     </Container>
+    </>
   );
 };
 

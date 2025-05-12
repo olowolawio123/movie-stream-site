@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col, Card } from "react-bootstrap";
-import movies from "../../movies"; // dummy list from existing dummy data
+import movies from "../movies"; // dummy list from existing dummy data
 
 const MyListSection = () => {
   // For demo, we pretend the user has added the first 4 movies to their list

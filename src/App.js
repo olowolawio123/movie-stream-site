@@ -6,6 +6,9 @@ import Watch from "./pages/Watch";
 import Profile from "./pages/Profile";
 import Wishlist from "./pages/Wishlist";
 import Terms from "./pages/Terms";
+import SearchResults from "./pages/SearchResults"; // or from "./components/SearchResults"
+import MovieDetails from "./pages/MovieDetails";
+
 
 
 
@@ -22,6 +25,8 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/terms" element={<Terms />} />
+          <Route path="/search" element={<SearchResults />} />
+          <Route path="/movie/:id" element={<MovieDetails />} />
         </Routes>
       </div>
     </Router>

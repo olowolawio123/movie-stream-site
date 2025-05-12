@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col, Card, ProgressBar } from "react-bootstrap";
-import movies from "../../movies"; // dummy data
+import movies from "../movies"; // dummy data
 
 const WatchingSection = () => {
   // Simulate progress with the first few movies
