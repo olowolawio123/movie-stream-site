@@ -10,13 +10,13 @@ const Profile = () => {
   return (
     <>
     <Header />
-    <Container className="mt-4 vh-100 text-white">
+    <Container className="mt-4  text-white">
       <Tabs defaultActiveKey="about" className="mt-4" fill>
         <Tab eventKey="about" title="About">
           <AboutSection />
         </Tab>
         <Tab eventKey="mylist" title="My List">
-          <MyListSection />
+        <MyListSection showHeader={false} />
         </Tab>
         <Tab eventKey="watching" title="Continue Watching">
           <WatchingSection />

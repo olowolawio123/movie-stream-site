@@ -6,7 +6,7 @@ const AboutSection = () => {
   const { user, userData } = useAuth();
 
   return (
-    <Card bg="dark" text="white" className="p-4">
+    <Card bg="dark" text="white" className="p-4 vh-100">
       <h3>About You</h3>
       <p><strong>Name:</strong> {userData?.name || "N/A"}</p>
       <p><strong>Email:</strong> {user?.email}</p>

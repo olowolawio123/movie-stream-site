@@ -30,7 +30,7 @@ const Header = () => {
             <Nav.Link href="/tv">TV Shows</Nav.Link>
             <Nav.Link href="/movies">Movies</Nav.Link>
             <Nav.Link href="/recent">Recently Added</Nav.Link>
-            <Nav.Link href="/mylist">My List</Nav.Link>
+            <Nav.Link href="/MyListSection">My List</Nav.Link>
           </Nav>
 
           {/* Search Form */}

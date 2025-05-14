@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Container, Spinner } from "react-bootstrap";
+import Header from "../components/Header";
 
 const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 
@@ -39,7 +40,9 @@ const MovieDetails = () => {
   if (loading) return <Spinner animation="border" variant="light" className="m-5" />;
 
   return (
-    <Container className="text-white mt-4">
+    <>
+    <Header />
+    <Container className="text-white mt-4 vh-100">
       <h2>{movie?.title}</h2>
       <p>{movie?.overview}</p>
 
@@ -59,6 +62,7 @@ const MovieDetails = () => {
         <p>No trailer available.</p>
       )}
     </Container>
+    </>
   );
 };
 
