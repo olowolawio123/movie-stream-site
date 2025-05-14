@@ -8,6 +8,7 @@ import Wishlist from "./pages/Wishlist";
 import Terms from "./pages/Terms";
 import SearchResults from "./pages/SearchResults"; // or from "./components/SearchResults"
 import MovieDetails from "./pages/MovieDetails";
+import MyListSection from "./components/MyListSection";
 
 
 
@@ -27,6 +28,7 @@ function App() {
           <Route path="/terms" element={<Terms />} />
           <Route path="/search" element={<SearchResults />} />
           <Route path="/movie/:id" element={<MovieDetails />} />
+          <Route path="/MyListSection" element={<MyListSection />} />
         </Routes>
       </div>
     </Router>
