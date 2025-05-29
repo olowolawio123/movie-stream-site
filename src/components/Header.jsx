@@ -4,11 +4,14 @@ import { Navbar, Nav, Container, NavDropdown, Image, Form, FormControl, Button }
 import { useAuth } from "../context/AuthContext";
 import logo from "../assets/th.jfif";
 import defaultAvatar from "../assets/defaultAvatar.png";
+import { toast } from "react-toastify";
 
 const Header = () => {
   const { user, userData } = useAuth();
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
+  const { logout } = useAuth();
+
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -16,6 +19,21 @@ const Header = () => {
       navigate(`/search?q=${encodeURIComponent(searchTerm.trim())}`);
     }
   };
+
+
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      toast.success("Logged out successfully");
+      navigate("/");
+    } catch (err) {
+      toast.error("Logout failed");
+    }
+  };
+
+
+
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg" sticky="top" className="shadow-sm py-3">
@@ -71,7 +89,7 @@ const Header = () => {
               <NavDropdown.Divider />
               <NavDropdown.Item href="/Profile">Profile</NavDropdown.Item>
               <NavDropdown.Item href="/settings">Settings</NavDropdown.Item>
-              <NavDropdown.Item href="/logout">Logout</NavDropdown.Item>
+              <NavDropdown.Item onClick={handleLogout}> Logout</NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

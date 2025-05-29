@@ -1,43 +1,63 @@
+// src/pages/Login.jsx
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { auth, provider as googleProvider } from "../firebase";
 import {
   signInWithEmailAndPassword,
+  GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import GoogleLogo from "../assets/Google.png"; // Add Google logo image in assets
+import { useNavigate } from "react-router-dom";
+import { auth } from "../firebase";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import GoogleLogo from "../assets/Google.png";
+import { Link } from "react-router-dom";
 
-export default function Login() {
+
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const result = await signInWithEmailAndPassword(auth, email, password);
+
+      if (!result.user.emailVerified) {
+        toast.warn("Please verify your email before logging in.");
+        await auth.signOut();
+        return;
+      }
+
+      toast.success("Login successful!");
       navigate("/Home");
     } catch (err) {
-      setError(err.message);
+      toast.error("Login failed: " + err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleGoogleLogin = async () => {
+    setLoading(true);
     try {
-      await signInWithPopup(auth, googleProvider);
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(auth, provider);
+      toast.success("Signed in with Google!");
       navigate("/Home");
     } catch (err) {
-      setError(err.message);
+      toast.error("Google sign-in failed: " + err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="bg-dark text-white d-flex justify-content-center align-items-center vh-100">
-      <div className="card p-4 shadow" style={{ maxWidth: "400px", width: "100%" }}>
-        <h3 className="text-center mb-4">Login</h3>
-
-        {error && <div className="alert alert-danger">{error}</div>}
+    <div className="d-flex justify-content-center align-items-center vh-100 bg-dark text-white">
+      <div className="bg-black p-4 rounded shadow-lg" style={{ maxWidth: "400px", width: "100%" }}>
+        <h2 className="mb-4 text-center">Login</h2>
 
         <form onSubmit={handleLogin}>
           <div className="mb-3">
@@ -45,10 +65,9 @@ export default function Login() {
             <input
               type="email"
               className="form-control"
-              required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter email"
+              required
             />
           </div>
 
@@ -57,39 +76,35 @@ export default function Login() {
             <input
               type="password"
               className="form-control"
-              required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
+              required
             />
           </div>
 
-          <button type="submit" className="btn btn-danger w-100">
-            Login
+          <button type="submit" className="btn btn-danger w-100 mb-2" disabled={loading}>
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
-
-        <div className="my-3 text-center">OR</div>
+        <p className="text-center mt-3">
+  <Link to="/forgot-password" className="text-warning">Forgot Password?</Link>
+</p>
 
         <button
           onClick={handleGoogleLogin}
-          className="btn btn-light w-100 d-flex align-items-center justify-content-center"
+          className="btn btn-outline-light w-100 d-flex align-items-center justify-content-center"
+          disabled={loading}
         >
-          <img
-            src={GoogleLogo}
-            alt="Google"
-            style={{ width: "20px", marginRight: "10px" }}
-          />
+          <img src={GoogleLogo} alt="Google" style={{ width: "20px", marginRight: "10px" }} />
           Continue with Google
         </button>
 
         <p className="mt-3 text-center">
-          Don’t have an account?{" "}
-          <a href="/signup" className="text-info">
-            Sign up
-          </a>
+          Don’t have an account? <a href="/Signup" className="text-info">Sign up</a>
         </p>
       </div>
     </div>
   );
-}
+};
+
+export default Login;

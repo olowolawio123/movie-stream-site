@@ -9,7 +9,8 @@ import Terms from "./pages/Terms";
 import SearchResults from "./pages/SearchResults"; // or from "./components/SearchResults"
 import MovieDetails from "./pages/MovieDetails";
 import MyListSection from "./components/MyListSection";
-
+import Settings from "./pages/Settings";
+import ForgotPassword from "./pages/ForgotPassword";
 
 
 
@@ -29,6 +30,10 @@ function App() {
           <Route path="/search" element={<SearchResults />} />
           <Route path="/movie/:id" element={<MovieDetails />} />
           <Route path="/MyListSection" element={<MyListSection />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+
+
         </Routes>
       </div>
     </Router>
