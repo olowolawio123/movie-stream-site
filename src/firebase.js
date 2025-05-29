@@ -6,6 +6,7 @@ import { getStorage } from "firebase/storage";
 import { GoogleAuthProvider } from "firebase/auth";
 
 
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBJCMe5Wht7BcuK40U9aqjq1yFLOUv2Etk",
