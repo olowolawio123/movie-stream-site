@@ -3,7 +3,7 @@ import { useLocation, Link } from "react-router-dom";
 import axios from "axios";
 import { Container, Row, Col, Card, Spinner } from "react-bootstrap";
 import Header from "../components/Header";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, collection, addDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { useAuth } from "../context/AuthContext";
 
@@ -24,7 +24,7 @@ const SearchResults = () => {
         const response = await axios.get(
           `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)}`
         );
-        setResults(response.data.results);
+        setResults(response.data.results || []);
       } catch (error) {
         console.error("Search failed:", error);
       } finally {
@@ -37,7 +37,6 @@ const SearchResults = () => {
 
   const handleAddToList = async (movie) => {
     if (!user) return alert("You must be logged in to add to your list.");
-
     try {
       const movieRef = doc(db, "users", user.uid, "myList", movie.id.toString());
       await setDoc(movieRef, {
@@ -48,6 +47,32 @@ const SearchResults = () => {
       alert(`${movie.title || movie.name} added to your list!`);
     } catch (error) {
       console.error("Error adding to list:", error);
+    }
+  };
+
+  const handleWatchTrailer = async (movie) => {
+    if (!user) return;
+
+    try {
+      // Save to continue watching
+      await setDoc(doc(db, "users", user.uid, "continueWatching", movie.id.toString()), {
+        id: movie.id,
+        title: movie.title || movie.name,
+        poster_path: movie.poster_path || "",
+        progress: 10,
+        timestamp: Date.now(),
+      });
+
+      // Add reward notification
+      await addDoc(collection(db, "users", user.uid, "notifications"), {
+        message: `You watched a trailer: ${movie.title || movie.name}. Click to claim +5 points!`,
+        claimed: false,
+        type: "trailer",
+        timestamp: Date.now(),
+      });
+
+    } catch (err) {
+      console.error("Error during trailer handling:", err);
     }
   };
 
@@ -81,7 +106,11 @@ const SearchResults = () => {
                       {item.title || item.name}
                     </Card.Title>
                     <div className="text-center mt-2 d-flex justify-content-center gap-2 flex-wrap">
-                      <Link to={`/movie/${item.id}`} className="btn btn-outline-light btn-sm">
+                      <Link
+                        to={`/movie/${item.id}`}
+                        className="btn btn-outline-light btn-sm"
+                        onClick={() => handleWatchTrailer(item)}
+                      >
                         Watch Trailer
                       </Link>
                       <button

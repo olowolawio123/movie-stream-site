@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Card, Spinner } from "react-bootstrap";
 import { doc, setDoc } from "firebase/firestore";
-import { db } from "../firebase"; // your Firebase config
+import { db } from "../firebase";
 import { useAuth } from "../context/AuthContext";
 import Header from "../components/Header";
 
@@ -53,17 +53,31 @@ const Home = () => {
 
   const handleWatchTrailer = async (movie) => {
     if (!user) return;
-  
+
     try {
+      // Save progress
       await setDoc(doc(db, "users", user.uid, "continueWatching", movie.id.toString()), {
         id: movie.id,
         title: movie.title || movie.name,
         poster_path: movie.poster_path,
-        progress: 10, // simulate starting progress
+        progress: 10,
         timestamp: Date.now()
       });
+
+      // Add reward notification
+      await setDoc(
+        doc(db, "users", user.uid, "notifications", movie.id.toString()),
+        {
+          type: "reward",
+          message: `You earned 5 points for watching "${movie.title || movie.name}"`,
+          claimed: false,
+          timestamp: Date.now(),
+        }
+      );
+
+      console.log("✅ Trailer logged and reward added.");
     } catch (err) {
-      console.error("Error adding to continue watching:", err);
+      console.error("Error handling trailer watch:", err);
     }
   };
 
@@ -96,13 +110,13 @@ const Home = () => {
                       {movie.title}
                     </Card.Title>
                     <div className="text-center mt-2 d-flex justify-content-center gap-2 flex-wrap">
-                    <Link
-                     to={`/movie/${movie.id}`}
-                    className="btn btn-outline-light btn-sm"
-                     onClick={() => handleWatchTrailer(movie)}
-                    >
-                     Watch Trailer
-                    </Link>
+                      <Link
+                        to={`/movie/${movie.id}`}
+                        className="btn btn-outline-light btn-sm"
+                        onClick={() => handleWatchTrailer(movie)}
+                      >
+                        Watch Trailer
+                      </Link>
 
                       <button
                         onClick={() => handleAddToList(movie)}
