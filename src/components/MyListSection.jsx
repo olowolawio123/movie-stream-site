@@ -5,6 +5,7 @@ import { db } from "../firebase";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Header from "../components/Header";
+import MobileFooter from "../components/MobileFooter";
 
 const MyListSection = ({ showHeader = true }) => {
   const { user } = useAuth();
@@ -150,6 +151,7 @@ const MyListSection = ({ showHeader = true }) => {
           </Row>
         )}
       </div>
+      <MobileFooter />
     </>
   );
 };

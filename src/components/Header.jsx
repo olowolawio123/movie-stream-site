@@ -91,6 +91,7 @@ const Header = () => {
             <Nav.Link href="/MyListSection">My List</Nav.Link>
           </Nav>
 
+          {/* Search Form */}
           <Form className="d-flex me-3" onSubmit={handleSearch}>
             <FormControl
               type="search"
@@ -102,7 +103,9 @@ const Header = () => {
             <Button variant="outline-light" type="submit">Search</Button>
           </Form>
 
-          <Nav className="align-items-center">
+          {/* Notifications + Profile/Settings only visible on md and up */}
+          <Nav className="align-items-center d-none d-md-flex">
+            {/* Notifications */}
             <NavDropdown
               title={
                 <div style={{ position: "relative" }}>
@@ -139,6 +142,7 @@ const Header = () => {
               )}
             </NavDropdown>
 
+            {/* Profile Dropdown */}
             <NavDropdown
               title={
                 <Image

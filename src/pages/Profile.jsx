@@ -8,6 +8,7 @@ import WatchingSection from '../components/WatchingSection';
 import { useAuth } from '../context/AuthContext';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
+import MobileFooter from "../components/MobileFooter";
 
 const Profile = () => {
   const { user } = useAuth();
@@ -61,6 +62,7 @@ const Profile = () => {
           </Tab>
         </Tabs>
       </Container>
+      <MobileFooter />
     </>
   );
 };

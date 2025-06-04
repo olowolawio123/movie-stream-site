@@ -2,6 +2,7 @@
 import { useAuth } from "../context/AuthContext";
 import { db } from "../firebase"; // If using multiple
 import { doc, updateDoc } from "firebase/firestore";
+import MobileFooter from "../components/MobileFooter";
 
 const movies = [
   { id: 1, title: "Movie A" },
@@ -20,6 +21,7 @@ export default function Wishlist() {
   };
 
   return (
+    <>
     <div>
       <h2>My Wishlist</h2>
       {movies.map((movie) => (
@@ -31,5 +33,8 @@ export default function Wishlist() {
         </div>
       ))}
     </div>
+    <MobileFooter />
+    </>
+
   );
 }

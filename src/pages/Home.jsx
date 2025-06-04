@@ -6,6 +6,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { useAuth } from "../context/AuthContext";
 import Header from "../components/Header";
+import MobileFooter from "../components/MobileFooter";
 
 const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 
@@ -134,6 +135,7 @@ const Home = () => {
           <p>No movies found.</p>
         )}
       </Container>
+      <MobileFooter />
     </>
   );
 };
