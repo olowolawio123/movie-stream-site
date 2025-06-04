@@ -11,6 +11,10 @@ import MovieDetails from "./pages/MovieDetails";
 import MyListSection from "./components/MyListSection";
 import Settings from "./pages/Settings";
 import ForgotPassword from "./pages/ForgotPassword";
+import NotificationPage from "./pages/NotificationPage";
+
+
+
 
 
 
@@ -18,7 +22,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 function App() {
   return (
     <Router>
-      <div className="bg-black min-h-screen text-white">
+      <div className="bg-black min-h-screen text-white h-100 ">
         <Routes>
         <Route path="/home" element={<Home />} />
           <Route path="/" element={<Signup />} />
@@ -32,10 +36,13 @@ function App() {
           <Route path="/MyListSection" element={<MyListSection />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/NotificationPage" element={<NotificationPage />} />
+
 
 
         </Routes>
       </div>
+
     </Router>
   );
 }

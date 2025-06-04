@@ -7,6 +7,8 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import { toast } from "react-toastify";
+import MobileFooter from "../components/MobileFooter";
+
 
 const SettingsPage = () => {
   const { user, logout } = useAuth();
@@ -145,6 +147,8 @@ const SettingsPage = () => {
           </Col>
         </Row>
       </Container>
+     
+      <MobileFooter />
     </>
   );
 };
